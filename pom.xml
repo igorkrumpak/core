@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>si.iitech</groupId>
   <artifactId>core</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
   <modules>
     <module>util</module>
@@ -18,5 +18,11 @@
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    
+    <org.jfree.jfreechart>1.5.3</org.jfree.jfreechart>
+    <org.apache.commons.commons-text>1.10.0</org.apache.commons.commons-text>
+    <org.javatuples.javatuples>1.2</org.javatuples.javatuples>
+    <org.junit.jupiter.junit-jupiter-api>5.10.0</org.junit.jupiter.junit-jupiter-api>
   </properties>
+  
 </project>
