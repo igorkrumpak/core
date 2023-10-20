@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -20,26 +22,29 @@ public class DateUtils {
 	}
 
 	private static Calendar icuCalendar(Date date) {
-		if(date == null) throw new NullPointerException();
+		if (date == null)
+			throw new NullPointerException();
 		Calendar icuDate = Calendar.getInstance();
 		icuDate.setTime(date);
 		return icuDate;
 	}
 
 	private static Calendar reuseTempIcuCalendar(Date date) {
-		if(date == null) throw new NullPointerException();
-		if(reusableDate.get() == null) {
+		if (date == null)
+			throw new NullPointerException();
+		if (reusableDate.get() == null) {
 			reusableDate.set(icuCalendar(date));
 			return reusableDate.get();
 		}
 		reusableDate.get().setTime(date);
 		return reusableDate.get();
 	}
+
 	private static Calendar reuseTempIcuCalendar2(Date date) {
-		if(date == null) {
+		if (date == null) {
 			throw new NullPointerException();
 		}
-		if(reusableDate2.get() == null) {
+		if (reusableDate2.get() == null) {
 			reusableDate2.set(icuCalendar(date));
 			return reusableDate2.get();
 		}
@@ -80,7 +85,8 @@ public class DateUtils {
 	}
 
 	public static boolean isBefore(Date date1, Date date2) {
-		if (date1 == null || date2 == null) throw new RuntimeException("date cannot be null"); 
+		if (date1 == null || date2 == null)
+			throw new RuntimeException("date cannot be null");
 		return date1.compareTo(date2) < 0;
 	}
 
@@ -107,7 +113,6 @@ public class DateUtils {
 		calendar.set(Calendar.YEAR, year);
 		return calendar.getTime();
 	}
-
 
 	public static Date getToday() {
 		Calendar calendar = Calendar.getInstance();
@@ -153,25 +158,23 @@ public class DateUtils {
 	}
 
 	public static Date getEndOfDay(Date date) {
-        Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
 		calendar.set(Calendar.MINUTE, 59);
 		calendar.set(Calendar.SECOND, 59);
 		return calendar.getTime();
-    }
+	}
 
 	public static Date getEndOfTheWeek(Date date) {
-        Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
 		calendar.set(Calendar.MINUTE, 59);
 		calendar.set(Calendar.SECOND, 59);
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		return calendar.getTime();
-    }
-
-	
+	}
 
 	public static Date addDays(Date date, int days) {
 		Calendar calendar = Calendar.getInstance();
@@ -250,7 +253,8 @@ public class DateUtils {
 		return getMissingIntervals(dates, endDate, maxIntervalDays, 0);
 	}
 
-	public static List<Interval> getMissingIntervals(List<Date> dates, Date endDate, int maxIntervalDays, int minIntervalDays) {
+	public static List<Interval> getMissingIntervals(List<Date> dates, Date endDate, int maxIntervalDays,
+			int minIntervalDays) {
 		List<Interval> intervals = new ArrayList<>();
 		if (dates.isEmpty()) {
 			return intervals;
@@ -260,7 +264,7 @@ public class DateUtils {
 		Date until = endDate != null ? endDate : sortedDates.get(sortedDates.size() - 1);
 		List<Date> allDates = getDates(from, until);
 		List<Date> missingDates = getMissingDates(allDates, sortedDates);
-	
+
 		Date startOfInterval = null;
 		Date endOfInterval = null;
 		for (int i = 0; i < missingDates.size(); i++) {
@@ -274,11 +278,11 @@ public class DateUtils {
 					endOfInterval = missingDates.get(i);
 				}
 			}
-	
+
 			if (startOfInterval != null && endOfInterval != null) {
 				Date tempEndOfInterval = addDays(endOfInterval, 1);
 				long intervalSize = (tempEndOfInterval.getTime() - startOfInterval.getTime()) / (1000 * 60 * 60 * 24);
-				
+
 				if (intervalSize > maxIntervalDays) {
 					Date newEndOfInterval = addDays(startOfInterval, maxIntervalDays);
 					intervals.add(new Interval(startOfInterval, newEndOfInterval));
@@ -301,14 +305,13 @@ public class DateUtils {
 	}
 
 	public static List<Date> getDates(Date from, Date until) {
-		return Stream.iterate(
-				from,
-				date -> DateUtils.addDays(date, 1)).limit(getNumberOfDaysBetweenDates(from, until) + 1)
-				.collect(Collectors.toList());
+		return Stream.iterate(from, date -> DateUtils.addDays(date, 1))
+				.limit(getNumberOfDaysBetweenDates(from, until) + 1).collect(Collectors.toList());
 	}
 
 	public static List<Date> getMissingDates(List<Date> mainCollection, List<Date> subCollection) {
-		return mainCollection.stream().filter(e -> !subCollection.contains(e)).collect(Collectors.toList());
+		Set<Date> subCollectionSet = new HashSet<>(subCollection);
+		return mainCollection.stream().filter(date -> !subCollectionSet.contains(date)).collect(Collectors.toList());
 	}
 
 	public static String formatDateTime(Date date) {
@@ -333,12 +336,12 @@ public class DateUtils {
 		return simpleDateFormat.format(date);
 	}
 
-    public static boolean isFirstDayInMonth(Date reportDate) {
-        return reuseTempIcuCalendar(reportDate).get(Calendar.DAY_OF_MONTH) == 1;
-    }
+	public static boolean isFirstDayInMonth(Date reportDate) {
+		return reuseTempIcuCalendar(reportDate).get(Calendar.DAY_OF_MONTH) == 1;
+	}
 
-    public static boolean isFirstDayInWeek(Date reportDate) {
-        return reuseTempIcuCalendar(reportDate).get(Calendar.DAY_OF_WEEK) == 2;
-    }
+	public static boolean isFirstDayInWeek(Date reportDate) {
+		return reuseTempIcuCalendar(reportDate).get(Calendar.DAY_OF_WEEK) == 2;
+	}
 
 }
