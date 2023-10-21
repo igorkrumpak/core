@@ -108,6 +108,36 @@ public class DateUtilsTest {
         assertEquals(date(11, 1, 2000), missingIntervals.get(2).dateUntil);
     }
     
+    @Test
+    public void testGetMissingDates() {
+    	List<Date> mainCollection = Arrays.asList(
+            date(1, 1, 2000),
+            date(2, 1, 2000),
+            date(3, 1, 2000),
+            date(4, 1, 2000),
+            date(5, 1, 2000),
+            date(6, 1, 2000),
+            date(7, 1, 2000),
+            date(8, 1, 2000),
+            date(9, 1, 2000)
+        );
+    	
+    	List<Date> subCollection = Arrays.asList(
+            date(1, 1, 2000),
+            date(3, 1, 2000),
+            date(4, 1, 2000),
+            date(5, 1, 2000),
+            date(6, 1, 2000),
+            date(7, 1, 2000),
+            date(9, 1, 2000)
+        );
+    	List<Date> missingDates = DateUtils.getMissingDates(mainCollection, subCollection);
+    	 assertEquals(2, missingDates.size());
+         assertEquals(date(2, 1, 2000), missingDates.get(0));
+         assertEquals(date(8, 1, 2000), missingDates.get(1));
+    	
+    }
+    
     private Date date(int day, int month, int year) {
 		return DateUtils.newDate(day, month, year);
 	}

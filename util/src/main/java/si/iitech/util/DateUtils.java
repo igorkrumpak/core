@@ -310,8 +310,13 @@ public class DateUtils {
 	}
 
 	public static List<Date> getMissingDates(List<Date> mainCollection, List<Date> subCollection) {
-		Set<Date> subCollectionSet = new HashSet<>(subCollection);
-		return mainCollection.stream().filter(date -> !subCollectionSet.contains(date)).collect(Collectors.toList());
+		Set<String> subSet = new HashSet<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		for (Date date : subCollection) {
+			subSet.add(sdf.format(date));
+		}
+
+		return mainCollection.stream().filter(date -> !subSet.contains(sdf.format(date))).collect(Collectors.toList());
 	}
 
 	public static String formatDateTime(Date date) {
