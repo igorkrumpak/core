@@ -16,6 +16,19 @@ public class DateUtilsTest {
         assertTrue(DateUtils.isFirstDayInMonth(date(1, 8, 2019)));
         assertTrue(DateUtils.isFirstDayInWeek(date(5, 8, 2019)));
     }
+    
+    @Test
+    public void testGetWeek() {
+    	assertEquals(DateUtils.getWeek(date(16, 10, 2023)), DateUtils.getWeek(date(16, 10, 2023)));
+    	assertEquals(date(16, 10, 2023), DateUtils.getWeek(date(16, 10, 2023)));
+    	assertEquals(date(16, 10, 2023), DateUtils.getWeek(date(17, 10, 2023)));
+    	assertEquals(date(16, 10, 2023), DateUtils.getWeek(date(18, 10, 2023)));
+    	assertEquals(date(16, 10, 2023), DateUtils.getWeek(date(19, 10, 2023)));
+    	assertEquals(date(16, 10, 2023), DateUtils.getWeek(date(20, 10, 2023)));
+    	assertEquals(date(16, 10, 2023), DateUtils.getWeek(date(21, 10, 2023)));
+    	assertEquals(date(16, 10, 2023), DateUtils.getWeek(date(22, 10, 2023)));
+    	assertEquals(date(23, 10, 2023), DateUtils.getWeek(date(23, 10, 2023)));
+    }
 
     @Test
     public void testGetMissingIntervals() {
@@ -106,6 +119,36 @@ public class DateUtilsTest {
 
         assertEquals(date(10, 1, 2000), missingIntervals.get(2).dateFrom);
         assertEquals(date(11, 1, 2000), missingIntervals.get(2).dateUntil);
+    }
+    
+    @Test
+    public void testGetMissingDates() {
+    	List<Date> mainCollection = Arrays.asList(
+            date(1, 1, 2000),
+            date(2, 1, 2000),
+            date(3, 1, 2000),
+            date(4, 1, 2000),
+            date(5, 1, 2000),
+            date(6, 1, 2000),
+            date(7, 1, 2000),
+            date(8, 1, 2000),
+            date(9, 1, 2000)
+        );
+    	
+    	List<Date> subCollection = Arrays.asList(
+            date(1, 1, 2000),
+            date(3, 1, 2000),
+            date(4, 1, 2000),
+            date(5, 1, 2000),
+            date(6, 1, 2000),
+            date(7, 1, 2000),
+            date(9, 1, 2000)
+        );
+    	List<Date> missingDates = DateUtils.getMissingDates(mainCollection, subCollection);
+    	 assertEquals(2, missingDates.size());
+         assertEquals(date(2, 1, 2000), missingDates.get(0));
+         assertEquals(date(8, 1, 2000), missingDates.get(1));
+    	
     }
     
     private Date date(int day, int month, int year) {
