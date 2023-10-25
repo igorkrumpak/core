@@ -3,7 +3,9 @@ package si.iitech.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -149,6 +151,46 @@ public class DateUtilsTest {
          assertEquals(date(2, 1, 2000), missingDates.get(0));
          assertEquals(date(8, 1, 2000), missingDates.get(1));
     	
+    }
+    
+    @Test
+    public void testGetMissingDatesUsingGetWeek() {
+    	List<Date> mainCollection = Arrays.asList(
+            date(23, 10, 2023),
+            date(16, 10, 2023),
+            date(9, 10, 2023)
+        );
+    	
+    	List<Date> subCollection = Arrays.asList(
+    		DateUtils.getWeek(date(24, 10, 2023)),
+    		DateUtils.getWeek(date(17, 10, 2023)),
+    		DateUtils.getWeek(date(10, 10, 2023))
+        );
+    	List<Date> missingDates = DateUtils.getMissingDates(mainCollection, subCollection);
+    	assertEquals(0, missingDates.size());
+    	
+    }
+    
+    @Test
+    public void testGetMissingDatesDiffrentFormating() throws ParseException {
+    	 // Use Calendar to create a date for mainCollection
+        Calendar cal = Calendar.getInstance();
+        cal.set(2023, Calendar.OCTOBER, 16, 0, 0, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date calculatedDate = cal.getTime();
+
+        // Use Date constructor to create a date for subCollection
+        Date databaseDate = new Date(calculatedDate.getTime());
+
+        List<Date> mainCollection = Arrays.asList(calculatedDate);
+        List<Date> subCollection = Arrays.asList(databaseDate);
+
+
+
+        List<Date> missingDates = DateUtils.getMissingDates(mainCollection, subCollection);
+
+        // This assertion will fail because of the time difference
+        assertEquals(0, missingDates.size(), "There should be no missing dates");
     }
     
     private Date date(int day, int month, int year) {
