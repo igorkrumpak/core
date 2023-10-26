@@ -5,9 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -310,13 +308,19 @@ public class DateUtils {
 	}
 
 	public static List<Date> getMissingDates(List<Date> mainCollection, List<Date> subCollection) {
-		Set<String> subSet = new HashSet<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		for (Date date : subCollection) {
-			subSet.add(sdf.format(date));
+		List<Date> missingDates = new ArrayList<Date>();
+		for (Date eachFromMainCollection :  mainCollection) {
+			boolean foundDateInSubCollection = false;
+			for (Date eachFromSubCollection : subCollection) {
+				if (isSameDate(eachFromSubCollection, eachFromMainCollection)) {
+					foundDateInSubCollection = true;
+					continue;
+				}
+			}
+			if (!foundDateInSubCollection)
+				missingDates.add(eachFromMainCollection);
 		}
-
-		return mainCollection.stream().filter(date -> !subSet.contains(sdf.format(date))).collect(Collectors.toList());
+		return missingDates;
 	}
 
 	public static String formatDateTime(Date date) {
