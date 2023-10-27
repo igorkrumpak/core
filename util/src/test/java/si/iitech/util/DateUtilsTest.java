@@ -20,6 +20,13 @@ public class DateUtilsTest {
     }
     
     @Test
+    public void getLastWeek() {
+    	Date today = date(27, 10, 2023); //Friday
+    	Date lastWeek = DateUtils.addDays(today, -7);
+    	assertEquals(date(20, 10, 2023), lastWeek); //Last friday
+    }
+    
+    @Test
     public void testGetWeek() {
     	assertEquals(DateUtils.getWeek(date(16, 10, 2023)), DateUtils.getWeek(date(16, 10, 2023)));
     	assertEquals(date(16, 10, 2023), DateUtils.getWeek(date(16, 10, 2023)));
