@@ -90,8 +90,7 @@ public class DateUtils {
 	}
 
 	public static Date newDate(int day, int month, int year) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = reuseTempIcuCalendar(new Date());
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
@@ -103,8 +102,7 @@ public class DateUtils {
 	}
 
 	public static Date newDate(int day, int month, int year, int hour, int minute) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = reuseTempIcuCalendar(new Date());
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
 		calendar.set(Calendar.MINUTE, minute);
 		calendar.set(Calendar.SECOND, 0);
@@ -116,9 +114,7 @@ public class DateUtils {
 	}
 
 	public static Date getToday() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(getNow());
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = reuseTempIcuCalendar(getNow());
 		calendar.set(Calendar.HOUR, 0);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -128,9 +124,7 @@ public class DateUtils {
 	}
 
 	public static Date getHour(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
-		calendar.setTime(date);
+		Calendar calendar = reuseTempIcuCalendar(date);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
@@ -138,9 +132,7 @@ public class DateUtils {
 	}
 
 	public static Date getDay(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = reuseTempIcuCalendar(date);
 		calendar.set(Calendar.HOUR, 0);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -150,9 +142,7 @@ public class DateUtils {
 	}
 
 	public static Date getWeek(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = reuseTempIcuCalendar(date);
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		calendar.set(Calendar.HOUR, 0);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -163,9 +153,7 @@ public class DateUtils {
 	}
 
 	public static Date getEndOfDay(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = reuseTempIcuCalendar(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
 		calendar.set(Calendar.MINUTE, 59);
 		calendar.set(Calendar.SECOND, 59);
@@ -173,9 +161,7 @@ public class DateUtils {
 	}
 
 	public static Date getEndOfTheWeek(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar =reuseTempIcuCalendar(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
 		calendar.set(Calendar.MINUTE, 59);
 		calendar.set(Calendar.SECOND, 59);
@@ -184,9 +170,7 @@ public class DateUtils {
 	}
 
 	public static Date addDays(Date date, int days) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = reuseTempIcuCalendar(date);
 		calendar.add(Calendar.DAY_OF_MONTH, days);
 		return calendar.getTime();
 	}
@@ -196,9 +180,7 @@ public class DateUtils {
 	}
 
 	public static Date addHours(Date date, int hours) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = reuseTempIcuCalendar(date);
 		calendar.add(Calendar.HOUR_OF_DAY, hours);
 		return calendar.getTime();
 	}
