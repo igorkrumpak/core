@@ -10,6 +10,7 @@
   <modules>
     <module>util</module>
     <module>test</module>
+    <module>calculator</module>
   </modules>
   <properties>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>

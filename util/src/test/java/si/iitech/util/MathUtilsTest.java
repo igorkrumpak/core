@@ -17,4 +17,9 @@ public class MathUtilsTest {
         assertEquals(0.621, MathUtils.dynamicRound(0.621325));
         assertEquals(62.62, MathUtils.dynamicRound(62.621325));
     }
+    
+    @Test
+    public void testRound2DecimalPlaces() {
+        assertEquals(99.12, MathUtils.round2DecimalPlaces(99.123567));
+    }
 }
