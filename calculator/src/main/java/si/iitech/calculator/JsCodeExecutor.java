@@ -17,7 +17,7 @@ public class JsCodeExecutor {
 	
 	private static String specificImports;
 	
-	private static final ThreadLocal<ScriptEngine> engine = ThreadLocal.withInitial(() -> new ScriptEngineManager().getEngineByName("js"));
+	private static final ScriptEngine engine = new ScriptEngineManager().getEngineByName("js");
 	
 	public static Double getDoubleValue(String notation, String jsCode, CalculatorObject coinDataObject) throws NoSuchMethodException, ScriptException {
 		Double value = getDoubleValuePrivate(jsCode, coinDataObject);
@@ -26,7 +26,7 @@ public class JsCodeExecutor {
 	}
 
 	private static Double getDoubleValuePrivate(String jsCode, Object... inputs) throws NoSuchMethodException, ScriptException {
-		ScriptEngine scriptEngine = engine.get();
+		ScriptEngine scriptEngine = engine;
 		Bindings binding = scriptEngine.createBindings();
 		scriptEngine.eval(imports, binding);
 		scriptEngine.eval(specificImports, binding);
@@ -47,7 +47,7 @@ public class JsCodeExecutor {
 	}
 
 	private static String getStringValuePrivate(String jsCode, Object... inputs) throws NoSuchMethodException, ScriptException {
-		ScriptEngine scriptEngine = engine.get();
+		ScriptEngine scriptEngine = engine;
 		Bindings binding = scriptEngine.createBindings();
 		scriptEngine.eval(imports, binding);
 		scriptEngine.eval(specificImports, binding);
@@ -68,7 +68,7 @@ public class JsCodeExecutor {
 	}
 
 	private static Boolean getBooleanValuePrivate(String jsCode, Object... inputs) throws NoSuchMethodException, ScriptException {
-		ScriptEngine scriptEngine = engine.get();
+		ScriptEngine scriptEngine = engine;
 		Bindings binding = scriptEngine.createBindings();
 		scriptEngine.eval(imports, binding);
 		scriptEngine.eval(specificImports, binding);
@@ -89,7 +89,7 @@ public class JsCodeExecutor {
 	}
 
     private static byte[] getByteArrayValuePrivate(String jsCode, Object inputs) throws NoSuchMethodException, ScriptException {
-    	ScriptEngine scriptEngine = engine.get();
+    	ScriptEngine scriptEngine = engine;
     	Bindings binding = scriptEngine.createBindings();
     	scriptEngine.eval(imports, binding);
     	scriptEngine.eval(specificImports, binding);
