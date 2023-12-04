@@ -17,7 +17,7 @@ public class JsCodeExecutor {
 	
 	private static String specificImports;
 	
-	private static final ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("js");
+	private static ThreadLocal<ScriptEngine> scriptEngine = ThreadLocal.withInitial(() -> new ScriptEngineManager().getEngineByName("js"));
 	
 	public static Double getDoubleValue(String notation, String jsCode, CalculatorObject coinDataObject) throws NoSuchMethodException, ScriptException {
 		Double value = getDoubleValuePrivate(jsCode, coinDataObject);
@@ -26,12 +26,12 @@ public class JsCodeExecutor {
 	}
 
 	private static Double getDoubleValuePrivate(String jsCode, Object... inputs) throws NoSuchMethodException, ScriptException {
-		Bindings binding = scriptEngine.createBindings();
-		scriptEngine.eval(imports, binding);
-		scriptEngine.eval(specificImports, binding);
-		scriptEngine.eval(jsCode, binding);
-		scriptEngine.setBindings(binding, ScriptContext.ENGINE_SCOPE);
-		Invocable invocable = (Invocable) scriptEngine;
+		Bindings binding = scriptEngine.get().createBindings();
+		scriptEngine.get().eval(imports, binding);
+		scriptEngine.get().eval(specificImports, binding);
+		scriptEngine.get().eval(jsCode, binding);
+		scriptEngine.get().setBindings(binding, ScriptContext.ENGINE_SCOPE);
+		Invocable invocable = (Invocable) scriptEngine.get();
 		Object result = invocable.invokeFunction("execute", inputs);
 		if (result instanceof Number) {
 			return ((Number) result).doubleValue();
@@ -46,12 +46,12 @@ public class JsCodeExecutor {
 	}
 
 	private static String getStringValuePrivate(String jsCode, Object... inputs) throws NoSuchMethodException, ScriptException {
-		Bindings binding = scriptEngine.createBindings();
-		scriptEngine.eval(imports, binding);
-		scriptEngine.eval(specificImports, binding);
-		scriptEngine.eval(jsCode, binding);
-		scriptEngine.setBindings(binding, ScriptContext.ENGINE_SCOPE);
-		Invocable invocable = (Invocable) scriptEngine;
+		Bindings binding = scriptEngine.get().createBindings();
+		scriptEngine.get().eval(imports, binding);
+		scriptEngine.get().eval(specificImports, binding);
+		scriptEngine.get().eval(jsCode, binding);
+		scriptEngine.get().setBindings(binding, ScriptContext.ENGINE_SCOPE);
+		Invocable invocable = (Invocable) scriptEngine.get();
 		Object result = invocable.invokeFunction("execute", inputs);
 		if (result instanceof String) {
 			return ((String) result);
@@ -66,12 +66,12 @@ public class JsCodeExecutor {
 	}
 
 	private static Boolean getBooleanValuePrivate(String jsCode, Object... inputs) throws NoSuchMethodException, ScriptException {
-		Bindings binding = scriptEngine.createBindings();
-		scriptEngine.eval(imports, binding);
-		scriptEngine.eval(specificImports, binding);
-		scriptEngine.eval(jsCode, binding);
-		scriptEngine.setBindings(binding, ScriptContext.ENGINE_SCOPE);
-		Invocable invocable = (Invocable) scriptEngine;
+		Bindings binding = scriptEngine.get().createBindings();
+		scriptEngine.get().eval(imports, binding);
+		scriptEngine.get().eval(specificImports, binding);
+		scriptEngine.get().eval(jsCode, binding);
+		scriptEngine.get().setBindings(binding, ScriptContext.ENGINE_SCOPE);
+		Invocable invocable = (Invocable) scriptEngine.get();
 		Object result = invocable.invokeFunction("execute", inputs);
 		if (result instanceof Boolean) {
 			return ((Boolean) result);
@@ -86,12 +86,12 @@ public class JsCodeExecutor {
 	}
 
     private static byte[] getByteArrayValuePrivate(String jsCode, Object inputs) throws NoSuchMethodException, ScriptException {
-    	Bindings binding = scriptEngine.createBindings();
-    	scriptEngine.eval(imports, binding);
-    	scriptEngine.eval(specificImports, binding);
-    	scriptEngine.eval(jsCode, binding);
-    	scriptEngine.setBindings(binding, ScriptContext.ENGINE_SCOPE);
-		Invocable invocable = (Invocable) scriptEngine;
+    	Bindings binding = scriptEngine.get().createBindings();
+    	scriptEngine.get().eval(imports, binding);
+    	scriptEngine.get().eval(specificImports, binding);
+    	scriptEngine.get().eval(jsCode, binding);
+    	scriptEngine.get().setBindings(binding, ScriptContext.ENGINE_SCOPE);
+		Invocable invocable = (Invocable) scriptEngine.get();
 		Object result = invocable.invokeFunction("execute", inputs);
 		if (result instanceof byte[]) {
 			return ((byte[]) result);
