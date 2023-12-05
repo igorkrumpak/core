@@ -30,7 +30,7 @@ public class ChartTest {
         file = new File(tmpdir + "/Chart.png");
         ImageIO.write(newImage, "png", file);
 
-        chart = IITechChartUtils.chartWithAllDetails(504, 207, "ChartWithDetails", chartObjects);
+        chart = IITechChartUtils.chartWithAllDetails(1008, 414, "ChartWithDetails", chartObjects);
         inStreambj = new ByteArrayInputStream(chart);
         newImage = ImageIO.read(inStreambj);
         tmpdir = System.getProperty("java.io.tmpdir");
@@ -317,7 +317,27 @@ public class ChartTest {
                                 0.654, 0.634,
                                 0.654, 0.664, 0.674, 0.684, 0.614, 0.9)));
     }
-
+    
+    @Test
+    public void testWithAllNullValues() throws IOException {
+        testAllCharts(
+                IITechChartUtils.createChartObject("a", Color.GREEN,
+                        Arrays.asList(
+                        		null, null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+                                null,null,
+                                null,null,null,null)),
+                IITechChartUtils.createChartObject("b", Color.BLUE,
+                        Arrays.asList(
+                                0.5, 0.354, 0.358, 0.364, 0.384, 0.394, 0.344, 0.324, 0.314, 0.352, 0.354, 0.354, 0.324,
+                                0.354, 0.334,
+                                0.354, 0.364, 0.374, 0.384, 0.314, 0.1)),
+                IITechChartUtils.createChartObject("c", Color.BLUE,
+                        Arrays.asList(
+                                0.5, 0.654, 0.658, 0.664, 0.684, 0.694, 0.644, 0.624, 0.614, 0.652, 0.654, 0.654, 0.624,
+                                0.654, 0.634,
+                                0.654, 0.664, 0.674, 0.684, 0.614, 0.9)));
+    }
+    
     @Test
     public void testNumbersAbove1() throws IOException {
         testAllCharts(

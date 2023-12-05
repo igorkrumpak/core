@@ -194,7 +194,9 @@ public class IITechChartUtils {
 		int series = 0;
 		double highestValue = 0.0;
 		for (int i = 0; i < chartObjects.length; i++) {
-			double value = chartObjects[i].getYValues().get(chartObjects[i].getYValues().size() - 1).doubleValue();
+			Double doubleValue = chartObjects[i].getYValues().get(chartObjects[i].getYValues().size() - 1);
+			if (doubleValue == null) continue;
+			double value = doubleValue.doubleValue();
 			if (highestValue == 0 || value > highestValue) {
 				series = i;
 				highestValue = value;
@@ -207,7 +209,9 @@ public class IITechChartUtils {
 		int series = 0;
 		double lowestValue = 0.0;
 		for (int i = 0; i < chartObjects.length; i++) {
-			double value = chartObjects[i].getYValues().get(chartObjects[i].getYValues().size() - 1).doubleValue();
+			Double doubleValue = chartObjects[i].getYValues().get(chartObjects[i].getYValues().size() - 1);
+			if (doubleValue == null) continue;
+			double value = doubleValue.doubleValue();
 			if (lowestValue == 0 || value < lowestValue) {
 				series = i;
 				lowestValue = value;
