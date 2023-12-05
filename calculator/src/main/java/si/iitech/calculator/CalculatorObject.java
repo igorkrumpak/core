@@ -1,8 +1,6 @@
 package si.iitech.calculator;
 
-import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,9 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.script.ScriptException;
 
-import si.iitech.util.ChartObject;
 import si.iitech.util.DateUtils;
-import si.iitech.util.IITechChartUtils;
 
 public class CalculatorObject {
 
@@ -116,6 +112,8 @@ public class CalculatorObject {
 			return null;
 		} catch (IndexOutOfBoundsException e) {
 			return null;
+		} catch (RuntimeException e) {
+			return null;
 		}
 	}
 
@@ -200,34 +198,4 @@ public class CalculatorObject {
 		return value;
 	}
 
-	public byte[] chart(Integer width, Integer height, ChartObject... chartObjects) {
-		return IITechChartUtils.chart(width, height, chartObjects);
-	}
-
-	public byte[] chartWithDetails(String name, Integer width, Integer height, ChartObject... chartObjects) {
-		return IITechChartUtils.chartWithDetails(width, height, name, chartObjects);
-	}
-
-	public byte[] chartWithAllDetails(String name, Integer width, Integer height, ChartObject... chartObjects) {
-		return IITechChartUtils.chartWithAllDetails(width, height, name, chartObjects);
-	}
-
-	public ChartObject getChartObjectWithRepeatValue(String name, int days, double value, Color color) {
-		return new ChartObject(name, color, Collections.nCopies(days, value));
-	}
-
-	public ChartObject getChartObject(String notation, String name, int days, Color color) {
-		List<Double> values = new ArrayList<>();
-		for (int i = 0; i < days; i++) {
-			try {
-				values.add(getDouble(notation, i));
-			} catch (RuntimeException | NoSuchMethodException | ScriptException e) {
-				values.add(null);
-			}
-		}
-		Collections.reverse(values);
-		return new ChartObject(name, color, values);
-	}
-
-	
 }

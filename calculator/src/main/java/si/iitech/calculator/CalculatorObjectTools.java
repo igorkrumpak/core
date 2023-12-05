@@ -40,6 +40,15 @@ public class CalculatorObjectTools {
 		return temp;
 	}
 	
+	public static List<Double> getCalculatorObjectsDoubleValueReverse(CalculatorObject calculatorObject, int size, String definition) {
+		List<Double> temp = calculatorObject.getCoinDataObjects().stream().map(each -> each.getDoubleOrNull(definition)).limit(size).collect(Collectors.toList());
+		while (temp.size() < size) {
+	        temp.add(null);
+	    }
+		Collections.reverse(temp);
+		return temp;
+	}
+	
 	public static Double lowestLow(CalculatorObject calculatorObject, int size, String definition) {
 		Double lowestLow = getCalculatorObjectsReverse(calculatorObject, size).stream()
 				.mapToDouble(each -> each != null ? each.getDoubleOrNull(definition) : 0.0).min()
@@ -73,4 +82,6 @@ public class CalculatorObjectTools {
 			}
 		}
 	}
+	
+	
 }

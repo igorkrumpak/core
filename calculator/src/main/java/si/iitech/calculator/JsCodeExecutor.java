@@ -13,7 +13,8 @@ public class JsCodeExecutor {
 			"var MathUtils = Java.type('si.iitech.util.MathUtils');" +
 			"var Color = Java.type('java.awt.Color');" +
 			"var DateUtils = Java.type('si.iitech.util.DateUtils');" +
-			"var Tools = Java.type('si.iitech.calculator.CalculatorObjectTools');";
+			"var Tools = Java.type('si.iitech.calculator.CalculatorObjectTools');" +
+			"var ChartUtils = Java.type('si.iitech.util.IITechChartUtils')";
 	
 	private static String specificImports;
 	

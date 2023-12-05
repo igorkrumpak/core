@@ -1,11 +1,12 @@
 package si.iitech.util;
 
+import java.awt.Color;
+import java.awt.Shape;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.awt.Shape;
-
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
@@ -20,9 +21,11 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import java.awt.Color;
-
 public class IITechChartUtils {
+	
+	public static ChartObject createChartObjectWithRepeatValue(String name, int days, double value, Color color) {
+		return new ChartObject(name, color, Collections.nCopies(days, value));
+	}
 
 	public static ChartObject createChartObject(String notation, Color color, List<Double> yValues) {
 		return new ChartObject(notation, color, yValues);
