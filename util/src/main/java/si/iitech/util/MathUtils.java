@@ -9,6 +9,10 @@ public class MathUtils {
     public static double round2DecimalPlaces(double number) {
         return Math.round(number * 100.0) / 100.0;
     }
+    
+    public static double round4DecimalPlaces(double number) {
+        return Math.round(number * 10000.0) / 10000.0;
+    }
 
 	public static double square(double number) {
 		return number * number;
