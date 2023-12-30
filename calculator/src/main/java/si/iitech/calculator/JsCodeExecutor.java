@@ -16,7 +16,7 @@ public class JsCodeExecutor {
 			"var Tools = Java.type('si.iitech.calculator.CalculatorObjectTools');" +
 			"var ChartUtils = Java.type('si.iitech.util.IITechChartUtils')";
 	
-	private static String specificImports;
+	private static String specificImports = "";
 	
 	private static ThreadLocal<ScriptEngine> scriptEngine = ThreadLocal.withInitial(() -> new ScriptEngineManager().getEngineByName("js"));
 	
@@ -103,5 +103,13 @@ public class JsCodeExecutor {
 	public static void setSpecificImports(String specificImports) {
 		JsCodeExecutor.specificImports = specificImports;
 	}
+	
+	public static String createExecuteFunction(String code) {
+		return "var execute = function(o) {\n" + 
+			    "   " + code + "\n" +
+			    "};\n";
+	}
+	
+	
 
 }
