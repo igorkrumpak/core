@@ -13,7 +13,6 @@ import si.iitech.util.DateUtils;
 
 public class CalculatorObject {
 
-	public List<Tag> tags = new ArrayList<>();
 	private Map<String, Object> calculatedValues = new HashMap<String, Object>();
 	private List<CalculatorObject> coinDataObjects = new ArrayList<>();
 	private Map<String, String> metadataCalculators = new HashMap<>();
@@ -50,24 +49,6 @@ public class CalculatorObject {
 	public List<CalculatorObject> getCoinDataObjects() {
 		return coinDataObjects;
 	}
-
-	
-
-	public void addTag(String tag, String color) {
-		tags.add(new Tag(tag, color));
-	}
-
-	public String tags() {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < tags.size(); i++) {
-			sb.append(tags.get(i));
-			if (i < tags.size() - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
-	}
-
 
 	public void addCalculatedValue(String notation, Object value) {
 		calculatedValues.put(notation, value);
