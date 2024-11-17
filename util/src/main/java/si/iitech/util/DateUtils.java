@@ -199,6 +199,16 @@ public class DateUtils {
 		long diffInMillies = Math.abs(date2.getTime() - date1.getTime());
 		return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
+	
+	public static long getNumberOfHoursBetweenDates(Date date1, Date date2) {
+		long diffInMillies = Math.abs(date2.getTime() - date1.getTime());
+		return TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	}
+	
+	public static long getNumberOfMinutesBetweenDates(Date date1, Date date2) {
+		long diffInMillies = Math.abs(date2.getTime() - date1.getTime());
+		return TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	}
 
 	public static Date unitTimestampToDate(String dateInUnixTimeStamp) {
 		return new Date(Long.valueOf(dateInUnixTimeStamp));
